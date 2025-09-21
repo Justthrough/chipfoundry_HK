@@ -29,6 +29,8 @@ Document the design flow to ensure reproducibility for the community.
 🛠 Design & Architecture
 Block Diagram
 
+### 🛠 Design & Architecture
+
 ```mermaid
 flowchart TD
     A[Microwatt CPU Core - OpenPOWER ISA] --> B[Memory-Mapped Bus]
