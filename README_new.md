@@ -1,8 +1,8 @@
-Microwatt + GPIO Controller
+### Microwatt + GPIO Controller
 
 Hackathon Proposal – Microwatt Momentum 2025
 
-📌 Project Overview
+### 📌 Project Overview
 
 This project extends the Microwatt open-source POWER CPU core with a General Purpose Input/Output (GPIO) controller.
 
@@ -14,7 +14,7 @@ Write outputs (e.g., LEDs, buzzers, or actuators).
 
 This demonstrates how Microwatt can act as the central processor in an embedded system by controlling external devices, a key requirement for real-world IoT and SoC applications.
 
-🎯 Objectives
+### 🎯 Objectives
 
 Design a GPIO peripheral with memory-mapped registers for input/output.
 
@@ -26,22 +26,8 @@ Provide testbenches and simulation waveforms to verify functionality.
 
 Document the design flow to ensure reproducibility for the community.
 
-🛠 Design & Architecture
-Block Diagram
 
-### 🛠 Design & Architecture
-
-```mermaid
-flowchart TD
-    A[Microwatt CPU Core - OpenPOWER ISA] --> B[Memory-Mapped Bus]
-    B --> C[GPIO Module]
-    C -->|GPIO_IN| D[Input Pins - Switches / Buttons]
-    C -->|GPIO_OUT| E[Output Pins - LEDs / Actuators]
-
-
-
-
-Register Map
+### Register Map
 
 GPIO_IN (0x80000000) → Read-only register capturing external input pin values.
 
@@ -55,7 +41,7 @@ If 1 → write 1 to GPIO_OUT (LED ON).
 
 Else → write 0 to GPIO_OUT (LED OFF).
 
-🔬 Verification Plan
+### 🔬 Verification Plan
 
 Simulation (Required):
 
@@ -73,7 +59,7 @@ Map output pins to LEDs.
 
 Run the C program → pressing a switch lights up an LED.
 
-💻 Tools & Platforms
+### 💻 Tools & Platforms
 
 Microwatt Core: Microwatt GitHub
 
@@ -83,7 +69,7 @@ Software Toolchain: GCC for POWER, GDB
 
 PDK: SKY130 standard cells (via OpenLane + ChipFoundry flow)
 
-📑 Deliverables
+### 📑 Deliverables
 
 RTL Files: Verilog/VHDL for GPIO peripheral (gpio.vhd / gpio.v).
 
@@ -99,13 +85,13 @@ Documentation: Block diagram, register map, usage instructions.
 
 Final Round: Short video demo + screenshots of running system.
 
-📜 Open-Source License
+### 📜 Open-Source License
 
 This project is licensed under the Apache 2.0 License.
 See the LICENSE
  file for details.
 
-🔗 References & Resources
+### 🔗 References & Resources
 
 Microwatt GitHub
 
@@ -117,7 +103,7 @@ ChipIgnite Flow (Sky130)
 
 ChipFoundry YouTube
 
-🚀 Expected Outcome
+### 🚀 Expected Outcome
 
 By the end of the hackathon, this project will deliver:
 
