@@ -30,7 +30,7 @@ Document the design flow to ensure reproducibility for the community.
 Block Diagram
 ```mermaid
 flowchart TD
-    A[Microwatt CPU Core<br>(OpenPOWER ISA)] --> B[Memory-Mapped Bus]
+    A[Microwatt CPU Core\n(OpenPOWER ISA)] --> B[Memory-Mapped Bus]
     B --> C[GPIO Module]
     C -->|GPIO_IN| D[Input Pins (Switches / Buttons)]
     C -->|GPIO_OUT| E[Output Pins (LEDs / Actuators)]
