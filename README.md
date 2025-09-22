@@ -1,75 +1,118 @@
-# OpenFrame Overview
+### Microwatt + GPIO Controller
 
-The OpenFrame Project provides an empty harness chip that differs significantly from the Caravel and Caravan designs. Unlike Caravel and Caravan, which include integrated SoCs and additional features, OpenFrame offers only the essential padframe, providing users with a clean slate for their custom designs.
+Hackathon Proposal – Microwatt Momentum 2025
 
-<img width="256" alt="Screenshot 2024-06-24 at 12 53 39 PM" src="https://github.com/efabless/openframe_timer_example/assets/67271180/ff58b58b-b9c8-4d5e-b9bc-bf344355fa80">
+### 📌 Project Overview
 
-## Key Characteristics of OpenFrame
+This project extends the Microwatt open-source POWER CPU core with a General Purpose Input/Output (GPIO) controller.
 
-1. **Minimalist Design:** 
-   - No integrated SoC or additional circuitry.
-   - Only includes the padframe, a power-on-reset circuit, and a digital ROM containing the 32-bit project ID.
+The GPIO peripheral allows Microwatt to:
 
-2. **Padframe Compatibility:**
-   - The padframe design and pin placements match those of the Caravel and Caravan chips, ensuring compatibility and ease of transition between designs.
-   - Pin types are identical, with power and ground pins positioned similarly and the same power domains available.
+Read inputs (e.g., switches, buttons, or sensors).
 
-3. **Flexibility:**
-   - Provides full access to all GPIO controls.
-   - Maximizes the user project area, allowing for greater customization and integration of alternative SoCs or user-specific projects at the same hierarchy level.
+Write outputs (e.g., LEDs, buzzers, or actuators).
 
-4. **Simplified I/O:**
-   - Pins that previously connected to CPU functions (e.g., flash controller interface, SPI interface, UART) are now repurposed as general-purpose I/O, offering flexibility for various applications.
+This demonstrates how Microwatt can act as the central processor in an embedded system by controlling external devices, a key requirement for real-world IoT and SoC applications.
 
-The OpenFrame harness is ideal for those looking to implement custom SoCs or integrate user projects without the constraints of an existing SoC.
+### 🎯 Objectives
 
-## Features
+Design a GPIO peripheral with memory-mapped registers for input/output.
 
-1. 44 configurable GPIOs.
-2. User area of approximately 15mm².
-3. Supports digital, analog, or mixed-signal designs.
+Integrate the peripheral with the Microwatt CPU core on the OpenFrame platform.
 
-# openframe_timer_example
+Write a simple program that toggles an LED based on switch input.
 
-This example implements a simple timer and connects it to the GPIOs.
+Provide testbenches and simulation waveforms to verify functionality.
 
-## Installation and Setup
+Document the design flow to ensure reproducibility for the community.
 
-First, clone the repository:
 
-```bash
-git clone https://github.com/efabless/openframe_timer_example.git
-cd openframe_timer_example
-```
+### Register Map
 
-Then, download all dependencies:
+GPIO_IN (0x80000000) → Read-only register capturing external input pin values.
 
-```bash
-make setup
-```
+GPIO_OUT (0x80000004) → Read/Write register controlling output pins.
 
-## Hardening the Design
+Example Software Flow
 
-In this example, we will harden the timer. You will need to harden your own design similarly.
+Read GPIO_IN.
 
-```bash
-make user_proj_timer
-```
+If 1 → write 1 to GPIO_OUT (LED ON).
 
-Once you have hardened your design, integrate it into the OpenFrame wrapper:
+Else → write 0 to GPIO_OUT (LED OFF).
 
-```bash
-make openframe_project_wrapper
-```
+### 🔬 Verification Plan
 
-## Important Notes
+Simulation (Required):
 
-1. **Connecting to Power:**
-   - Ensure your design is connected to power using the power pins on the wrapper.
-   - Use the `vccd1_connection` and `vssd1_connection` macros, which contain the necessary vias and nets for power connections.
+Use Verilator or GHDL to simulate Microwatt + GPIO.
 
-2. **Flattening the Design:**
-   - If you plan to flatten your design within the `openframe_project_wrapper`, do not buffer the analog pins using standard cells.
+Testbench drives input pins with patterns (0/1).
 
-3. **Running Custom Steps:**
-   - Execute the custom step in OpenLane that copies the power pins from the template DEF. If this step is skipped, the precheck will fail, and your design will not be powered.
+Expected output register changes are observed in GTKWave.
+
+FPGA Demo (Optional, if hardware available):
+
+Map input pins to board switches.
+
+Map output pins to LEDs.
+
+Run the C program → pressing a switch lights up an LED.
+
+### 💻 Tools & Platforms
+
+Microwatt Core: Microwatt GitHub
+
+FPGA/ASIC Flow: Yosys, Verilator, GHDL, OpenLane, ChipFoundry OpenFrame
+
+Software Toolchain: GCC for POWER, GDB
+
+PDK: SKY130 standard cells (via OpenLane + ChipFoundry flow)
+
+### 📑 Deliverables
+
+RTL Files: Verilog/VHDL for GPIO peripheral (gpio.vhd / gpio.v).
+
+Integration: Top-level wrapper connecting Microwatt + GPIO.
+
+Testbenches: Input stimulus, expected output checks.
+
+C Program: Example firmware toggling LED from switch input.
+
+Simulation Results: Waveform screenshots (GTKWave).
+
+Documentation: Block diagram, register map, usage instructions.
+
+Final Round: Short video demo + screenshots of running system.
+
+### 📜 Open-Source License
+
+This project is licensed under the Apache 2.0 License.
+See the LICENSE
+ file for details.
+
+### 🔗 References & Resources
+
+Microwatt GitHub
+
+OpenPOWER Foundation
+
+ChipFoundry OpenFrame User Project
+
+ChipIgnite Flow (Sky130)
+
+ChipFoundry YouTube
+
+### 🚀 Expected Outcome
+
+By the end of the hackathon, this project will deliver:
+
+A working Microwatt + GPIO SoC design.
+
+Verified simulation results.
+
+Optional FPGA demonstration video.
+
+Open-source, reproducible flow for the community.
+
+This beginner-friendly yet practical project highlights how open-source CPUs can integrate with simple peripherals to create useful embedded systems.
